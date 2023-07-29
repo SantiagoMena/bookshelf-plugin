@@ -4,11 +4,8 @@ namespace santiagomena\craftbookshelf\migrations;
 
 use Craft;
 use craft\db\Migration;
-use craft\errors\EntryTypeNotFoundException;
-use craft\errors\SectionNotFoundException;
 use craft\fieldlayoutelements\CustomField;
 use craft\fields\PlainText;
-use craft\helpers\ArrayHelper;
 use craft\models\FieldGroup;
 use craft\models\FieldLayoutTab;
 use craft\models\Section;
