@@ -11,15 +11,10 @@ use craft\web\Controller;
 use craft\web\View;
 
 
-class BookController extends Controller
+class PublicBookshelfController extends Controller
 {
-    protected int|bool|array $allowAnonymous = false;
-    public function actionIndex()
-    {
-        return $this->renderTemplate('_bookshelf/book/index');
-    }
-
-    public function actionPublic(string $username)
+    protected int|bool|array $allowAnonymous = true;
+    public function actionIndex(string $username)
     {
         $author = User::find()->where(['username' => $username])->one();
 
@@ -37,10 +32,4 @@ class BookController extends Controller
         return $view;
     }
 
-    public function actionAdd()
-    {
-        $this->requirePostRequest();
-
-        // Validate input and save the book
-    }
 }

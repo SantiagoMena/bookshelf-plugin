@@ -3,11 +3,14 @@
 namespace santiagomena\craftbookshelf;
 
 use Craft;
+use craft\base\Element;
 use craft\base\Event;
 use craft\base\Plugin as BasePlugin;
+use craft\elements\Entry;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterUrlRulesEvent;
+use craft\events\SetElementRouteEvent;
 use craft\services\Fs;
 use craft\web\UrlManager;
 use craft\web\twig\variables\Cp;
@@ -59,7 +62,7 @@ class Plugin extends BasePlugin
             UrlManager::class,
             UrlManager::EVENT_REGISTER_SITE_URL_RULES,
             function(RegisterUrlRulesEvent $event) {
-                $event->rules['bookshelf'] = '_bookshelf/book/book';
+                $event->rules['bookshelf'] = '_bookshelf/public-bookshelf/index';
             }
         );
         // Menu item
@@ -70,7 +73,7 @@ class Plugin extends BasePlugin
             Cp::EVENT_REGISTER_CP_NAV_ITEMS,
             function(RegisterCpNavItemsEvent $event) {
                 $event->navItems[] = [
-                    'url' => 'bookshelf',
+                    'url' => '/bookshelf',
                     'label' => 'Bookshelf',
                     'icon' => '@santiagomena/craftbookshelf/icon.svg',
                 ];
