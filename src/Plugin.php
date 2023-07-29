@@ -55,6 +55,7 @@ class Plugin extends BasePlugin
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
             function(RegisterUrlRulesEvent $event) {
                 $event->rules['bookshelf'] = '_bookshelf/book/index';
+                $event->rules['wishlist'] = '_bookshelf/wish-list/index';
             }
         );
 
