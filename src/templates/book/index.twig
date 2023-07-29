@@ -1,0 +1,9 @@
+{% extends "_bookshelf/layout/template" %}
+
+{% block content %}
+    <div class="row mt-xl-5" id="books">
+        {{
+            include('_bookshelf/book/_books')
+        }}
+    </div>
+{% endblock %}

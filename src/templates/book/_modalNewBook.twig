@@ -1,0 +1,77 @@
+{% set section = craft.app.sections.getSectionByHandle('bookshelfBookSection') %}
+{% macro errorList(errors) %}
+    {% if errors %}
+        {{ ul(errors, {class: 'errors'}) }}
+    {% endif %}
+{% endmacro %}
+{% set entry = entry ?? create('craft\\elements\\Entry') %}
+<div class="modal" tabindex="-1" id="newBookModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Book</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+                <div class="modal-body">
+                        {{ csrfInput() }}
+                        {{ actionInput('entries/save-entry') }}
+                        {{ redirectInput('/admin/bookshelf') }}
+                        {{ hiddenInput('sectionId', section.id) }}
+                        {{ hiddenInput('enabled', true) }}
+
+                        <label for="title" class="form-label">Title</label>
+                        {{ input('text', 'title', entry.title, {
+                            id: 'title',
+                            class: 'form-control mb-3',
+                            required: 'required',
+                        }) }}
+{#                    {{ _self.errorList(entry.getErrors('title')) }}#}
+
+                        <label for="author" class="form-label">Author</label>
+                        {{ input('text', 'fields[bookshelfAuthorField]', entry.title, {
+                            id: 'author',
+                            class: 'form-control mb-3',
+                            required: 'required',
+                        }) }}
+
+                        <label for="genre" class="form-label">Genre</label>
+                        {{ input('text', 'fields[bookshelfGenreField]', entry.title, {
+                            id: 'genre',
+                            class: 'form-control mb-3',
+                            required: 'required',
+                        }) }}
+
+                        <label for="year" class="form-label">Publication Year</label>
+                        {{ input('number', 'fields[bookshelfPublicationYearField]', entry.title, {
+                            id: 'year',
+                            class: 'form-control mb-3',
+                            required: 'required',
+                        }) }}
+
+                        <label for="image" class="form-label">Cover Image</label>
+                        {{ input('file', 'fields[bookshelfCoverImageField]', entry.title, {
+                            id: 'image',
+                            class: 'form-control mb-3',
+                            required: 'required',
+                            accept: 'image/*',
+                        }) }}
+
+                        <label for="description" class="form-label">Description</label>
+                        {{ tag('textarea', {
+                            id: 'description',
+                            name: 'fields[bookshelfBriefDescriptionField]',
+                            text: entry.bookshelfBriefDescriptionField,
+                            class: 'form-control mb-3',
+                            required: 'required',
+                        }) }}
+    {#                    {{ _self.errorList(entry.getErrors('body')) }}#}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

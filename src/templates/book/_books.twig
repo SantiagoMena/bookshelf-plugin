@@ -1,0 +1,28 @@
+{% for book in craft.entries().section('bookshelfBookSection').all() %}
+    {{
+    include('_bookshelf/book/_book', {
+        book: book,
+    })
+    }}
+{% endfor %}
+
+<script>
+    $('document').ready(function (){
+        function loadWishList() {
+            $.get("{{ url('wishlist') }}", function( data ) {
+                $( ".wishlist" ).html( data );
+            });
+        }
+
+        $('#wishlist').click(loadWishList);
+
+        function switchWishList() {
+            $.get($(this).data('targetUrl'), function( data ) {
+                $('#books').html(data);
+                loadWishList();
+            });
+        }
+
+        $('.switch-wishlist-books').click(switchWishList);
+    });
+</script>

@@ -1,0 +1,25 @@
+{% for book in books %}
+    <div class="row">
+        <div class="col-md-3">
+            <img class="img-thumbnail img-mini" src="{{ book.bookshelfCoverImageField.one().getUrl() }}" />
+        </div>
+        <div class="col-md-6">{{ book.title }}</div>
+        <div class="col-md-3">
+            <a href="javascript:void(0);" class="switch-wishlist btn btn-success" data-target-url="{{ url('wishlist/switch') ~ "?uid=" ~ book.uid }}" class="btn btn-success col-md-12 in-wishlist">Remove ❤️</a>
+        </div>
+    </div>
+{% endfor %}
+
+<script>
+    function switchWishList() {
+        $.get($(this).data('targetUrl'), function( data ) {
+            $.get("{{ url('wishlist') }}", function( data ) {
+                $( ".wishlist" ).html( data );
+            });
+
+            $('#books').html(data);
+        });
+    }
+
+    $('.switch-wishlist').click(switchWishList);
+</script>

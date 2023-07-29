@@ -1,0 +1,18 @@
+<div class="col-md-3 align-content-center mb-4 mt-4">
+    <h1 class="title text-truncate">{{ book.title }}</h1>
+    <p class="author"><span>Author:</span> {{ book.bookshelfAuthorField }}</p>
+    <img class="img-thumbnail" src="{{ book.bookshelfCoverImageField.one().getUrl() }}" />
+    <p class="genre"><span>Genre:</span> {{ book.bookshelfGenreField }}</p>
+    <p class="year"><span>Publication Year:</span> {{ book.bookshelfPublicationYearField }}</p>
+    <p class="description text-truncate">{{ book.bookshelfBriefDescriptionField }}</p>
+        {% set wishListUsers = book.bookshelfWishListUsers.all() %}
+        {% set inWishList = false %}
+        {% for wishListUser in wishListUsers %}
+            {% if wishListUser.id == craft.app.user.identity.id %}
+                {% set inWishList = true %}
+            {% endif %}
+        {% endfor %}
+    <a href="javascript:void(0);" class="btn btn-success col-md-12 switch-wishlist-books" data-target-url="{{ url('wishlist/switch') ~ "?uid=" ~ book.uid }}">
+        {{ inWishList ? "Remove From Wish List ❤️" : "Add To Wish List ♡" }}
+    </a>
+</div>

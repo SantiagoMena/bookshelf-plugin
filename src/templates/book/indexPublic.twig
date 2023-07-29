@@ -1,0 +1,14 @@
+{% extends "_bookshelf/layout/templatePublic" %}
+
+
+{% block content %}
+    <div class="row mt-xl-5">
+        {% for book in books %}
+            {{
+                include('_bookshelf/book/_bookPublic', {
+                    book: book,
+                })
+            }}
+        {% endfor %}
+    </div>
+{% endblock %}
