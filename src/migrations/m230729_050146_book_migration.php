@@ -8,6 +8,7 @@ use craft\fieldlayoutelements\CustomField;
 use craft\fields\Assets;
 use craft\fields\Number;
 use craft\fields\PlainText;
+use craft\fields\Users;
 use craft\models\FieldGroup;
 use craft\models\FieldLayoutTab;
 use craft\models\Section;
@@ -96,6 +97,15 @@ class m230729_050146_book_migration extends Migration
                         'groupId' => $fieldGroupBooks->id
                     ]);
                     Craft::$app->fields->saveField($fieldBriefDescription);
+
+
+//                  6. Make Wish List Users
+                    $wishListUsers = new Users([
+                        'handle' => 'bookshelfWishListUsers',
+                        'name' => 'Wish List Users',
+                        'groupId' => $fieldGroupBooks->id
+                    ]);
+                    Craft::$app->fields->saveField($wishListUsers);
                 }
 
 //              3. Create Section
@@ -124,6 +134,7 @@ class m230729_050146_book_migration extends Migration
                 $fieldPublicationYear = Craft::$app->getFields()->getFieldByHandle('bookshelfPublicationYearField');
                 $fieldCoverImage = Craft::$app->getFields()->getFieldByHandle('bookshelfCoverImageField');
                 $fieldBriefDescription = Craft::$app->getFields()->getFieldByHandle('bookshelfBriefDescriptionField');
+                $fieldWishListUsers = Craft::$app->getFields()->getFieldByHandle('bookshelfWishListUsers');
 
                 // Get current fieldLayout
                 $fieldLayout = $entryType->getFieldLayout();
@@ -147,6 +158,9 @@ class m230729_050146_book_migration extends Migration
                             ]),
                             new CustomField($fieldBriefDescription, [
                                 'required' => true,
+                            ]),
+                            new CustomField($fieldWishListUsers, [
+                                'required' => false,
                             ]),
                         ]
                     ])
@@ -176,7 +190,7 @@ class m230729_050146_book_migration extends Migration
     {
         echo "m230728_202516_book_migration cannot be reverted.\n";
 
-        if (Craft::$app->projectConfig->get('plugins._bookshelf', true) !== null) {
+//        if (Craft::$app->projectConfig->get('plugins._bookshelf', true) !== null) {
             try {
 //              1. Delete FieldGroup
                 $groups = Craft::$app->fields->getAllGroups();
@@ -197,7 +211,8 @@ class m230729_050146_book_migration extends Migration
                             $field->handle === 'bookshelfGenreField' ||
                             $field->handle === 'bookshelfPublicationYearField' ||
                             $field->handle === 'bookshelfCoverImageField' ||
-                            $field->handle === 'bookshelfBriefDescriptionField'
+                            $field->handle === 'bookshelfBriefDescriptionField' ||
+                            $field->handle === 'bookshelfWishListUsers'
                         ){
                             Craft::$app->fields->deleteField($field);
                         }
@@ -224,7 +239,7 @@ class m230729_050146_book_migration extends Migration
             } catch (\Throwable $e) {
                 throw new Exception($e);
             }
-        }
+//        }
 
         return true;
     }
