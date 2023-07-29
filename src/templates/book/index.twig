@@ -1,6 +1,63 @@
-{% extends "_layouts/cp" %}
-{% set title = "Bookshelf Dashboard" %}
+{% extends "_bookshelf/layout/template" %}
 
 {% block content %}
-    <h1>Welcome to the Bookshelf Plugin!</h1>
+    <div class="row mt-xl-5">
+        {% for book in craft.entries().section('bookshelfBookSection').all() %}
+            {{
+                include('_bookshelf/book/_book', {
+                    book: book,
+                })
+            }}
+            {{
+            include('_bookshelf/book/_book', {
+                book: book,
+            })
+            }}
+            {{
+            include('_bookshelf/book/_book', {
+                book: book,
+            })
+            }}
+            {{
+            include('_bookshelf/book/_book', {
+                book: book,
+            })
+            }}
+            {{
+            include('_bookshelf/book/_book', {
+                book: book,
+            })
+            }}
+            {{
+            include('_bookshelf/book/_book', {
+                book: book,
+            })
+            }}
+            {{
+            include('_bookshelf/book/_book', {
+                book: book,
+            })
+            }}
+            {{
+            include('_bookshelf/book/_book', {
+                book: book,
+            })
+            }}
+            {{
+            include('_bookshelf/book/_book', {
+                book: book,
+            })
+            }}
+            {{
+            include('_bookshelf/book/_book', {
+                book: book,
+            })
+            }}
+            {{
+            include('_bookshelf/book/_book', {
+                book: book,
+            })
+            }}
+        {% endfor %}
+    </div>
 {% endblock %}
