@@ -154,7 +154,7 @@ class m230729_050146_book_migration extends Migration
                                 'required' => true,
                             ]),
                             new CustomField($fieldCoverImage, [
-                                'required' => false,
+                                'required' => true,
                             ]),
                             new CustomField($fieldBriefDescription, [
                                 'required' => true,
