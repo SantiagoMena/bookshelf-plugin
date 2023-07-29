@@ -8,9 +8,7 @@
 
     {% set inWishList = craft.entries().section('bookshelfBookSection').bookshelfWishListUsers(craft.app.user.identity.id).exists() %}
 
-    {% if inWishList %}
-        <a href="javascript:void(0);" class="btn btn-success col-md-12 switch-wishlist-books" data-target-url="{{ url('wishlist/switch') ~ "?uid=" ~ book.uid }}">Remove From Wish List ❤️</a>
-    {% else %}
-        <a href="javascript:void(0);" class="btn btn-success col-md-12 switch-wishlist-books" data-target-url="{{ url('wishlist/switch') ~ "?uid=" ~ book.uid }}">Add To Wish List ♡</a>
-    {% endif %}
+    <a href="javascript:void(0);" class="btn btn-success col-md-12 switch-wishlist-books" data-target-url="{{ url('wishlist/switch') ~ "?uid=" ~ book.uid }}">
+        {{ inWishList ? "Remove From Wish List ❤️" : "Add To Wish List ♡" }}
+    </a>
 </div>
