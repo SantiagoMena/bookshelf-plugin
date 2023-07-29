@@ -117,9 +117,7 @@ class m230729_050146_book_migration extends Migration
                         new Section_SiteSettings([
                             'siteId' => Craft::$app->sites->getPrimarySite()->id,
                             'enabledByDefault' => true,
-                            'hasUrls' => true,
-                            'uriFormat' => 'book/{slug}',
-                            'template' => '@santiagomena/craftbookshelf/_book',
+                            'hasUrls' => false,
                         ]),
                     ]
                 ]);
