@@ -26,9 +26,8 @@ class m230729_050146_book_migration extends Migration
      */
     public function safeUp(): bool
     {
-
         // Don’t make the same config changes twice
-        if (Craft::$app->projectConfig->get('plugins.my-plugin-handle', true) === null) {
+//        if (Craft::$app->projectConfig->get('plugins._bookshelf', true) === null) {
             try {
 //                1. Make FieldGroup
                 $fieldGroup = new FieldGroup([
@@ -82,7 +81,7 @@ class m230729_050146_book_migration extends Migration
                         'restrictFiles' => true,
                         'allowedKinds' => ['image'],
                         'allowUploads' => 1,
-                        'minRelations' => 1,
+                        'minRelations' => 0,
                         'maxRelations' => 1,
                         'viewMode' => 'large',
                         'previewMode' => 'full',
@@ -144,7 +143,7 @@ class m230729_050146_book_migration extends Migration
                                 'required' => true,
                             ]),
                             new CustomField($fieldCoverImage, [
-                                'required' => true,
+                                'required' => false,
                             ]),
                             new CustomField($fieldBriefDescription, [
                                 'required' => true,
@@ -163,9 +162,9 @@ class m230729_050146_book_migration extends Migration
             } catch (\Throwable $e) {
                 throw new Exception($e);
             }
-        } else {
-            return false;
-        }
+//        } else {
+//            return false;
+//        }
 
         return true;
     }
@@ -177,11 +176,11 @@ class m230729_050146_book_migration extends Migration
     {
         echo "m230728_202516_book_migration cannot be reverted.\n";
 
-        if (Craft::$app->projectConfig->get('plugins.my-plugin-handle', true) !== null) {
+        if (Craft::$app->projectConfig->get('plugins._bookshelf', true) !== null) {
             try {
 //              1. Delete FieldGroup
                 $groups = Craft::$app->fields->getAllGroups();
-
+                $fieldGroupBooks = null;
                 foreach ($groups as $group) {
                     if($group->name === 'bookshelfBooksGroup') {
                         $fieldGroupBooks = $group;
