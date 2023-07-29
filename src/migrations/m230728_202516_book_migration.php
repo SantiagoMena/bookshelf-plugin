@@ -50,7 +50,7 @@ class m230728_202516_book_migration extends Migration
 //                  1. Make Author
                     $fieldAuthor = new PlainText([
                         'handle' => 'bookshelfAuthorField',
-                        'name' => 'bookshelfAuthorField',
+                        'name' => 'Book Author',
                         'groupId' => $fieldGroupBooks->id
                     ]);
                     Craft::$app->fields->saveField($fieldAuthor);
@@ -58,7 +58,7 @@ class m230728_202516_book_migration extends Migration
 //                  2. Make Genre
                     $fieldGenre = new PlainText([
                         'handle' => 'bookshelfGenreField',
-                        'name' => 'bookshelfGenreField',
+                        'name' => 'Genre',
                         'groupId' => $fieldGroupBooks->id
                     ]);
                     Craft::$app->fields->saveField($fieldGenre);
@@ -66,7 +66,7 @@ class m230728_202516_book_migration extends Migration
 //                  3. Make Publication Year
                     $fieldPublicationYear = new PlainText([
                         'handle' => 'bookshelfPublicationYearField',
-                        'name' => 'bookshelfPublicationYearField',
+                        'name' => 'Publication Year',
                         'groupId' => $fieldGroupBooks->id
                     ]);
                     Craft::$app->fields->saveField($fieldPublicationYear);
@@ -74,7 +74,7 @@ class m230728_202516_book_migration extends Migration
 //                  4. Make Publication Cover Image
                     $fieldCoverImage = new PlainText([
                         'handle' => 'bookshelfCoverImageField',
-                        'name' => 'bookshelfCoverImageField',
+                        'name' => 'Cover Image',
                         'groupId' => $fieldGroupBooks->id
                     ]);
                     Craft::$app->fields->saveField($fieldCoverImage);
@@ -82,7 +82,7 @@ class m230728_202516_book_migration extends Migration
 //                  5. Make Publication Brief Description
                     $fieldBriefDescription = new PlainText([
                         'handle' => 'bookshelfBriefDescriptionField',
-                        'name' => 'bookshelfBriefDescriptionField',
+                        'name' => 'Brief Description',
                         'groupId' => $fieldGroupBooks->id
                     ]);
                     Craft::$app->fields->saveField($fieldBriefDescription);
@@ -118,9 +118,9 @@ class m230728_202516_book_migration extends Migration
                 // Get current fieldLayout
                 $fieldLayout = $entryType->getFieldLayout();
                 $fieldLayout->setTabs([
-                    ...$fieldLayout->getTabs(),
+//                    ...$fieldLayout->getTabs(),
                     FieldLayoutTab::createFromConfig([
-                        'name' => 'bookshelfTab',
+                        'name' => 'Book',
                         'layoutId' => $fieldLayout->id,
                         'elements' => [
                             new CustomField($fieldAuthor, [
@@ -144,7 +144,7 @@ class m230728_202516_book_migration extends Migration
 
                 $entryTypeBooks = Craft::$app->sections->saveEntryType(new EntryType([
                     'sectionId' => Craft::$app->sections->getSectionByHandle('bookshelfBookSection')->id,
-                    'name' => 'bookshelfBooksEntryType',
+                    'name' => 'books',
                     'handle' => 'bookshelfBooksEntryType',
                     'hasTitleField' => true,
                     'fieldLayout' => $fieldLayout
@@ -165,8 +165,6 @@ class m230728_202516_book_migration extends Migration
     public function safeDown(): bool
     {
         echo "m230728_202516_book_migration cannot be reverted.\n";
-
-        // Find and delete the section and its entry type
 
         if (Craft::$app->projectConfig->get('plugins.my-plugin-handle', true) !== null) {
             try {
