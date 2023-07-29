@@ -27,4 +27,34 @@ class WishListController extends Controller
         ]);
     }
 
+    public function actionSwitch(string $uid)
+    {
+        $user = Craft::$app->getUser()->getIdentity()->id;
+        $bookQuery = Entry::find()->section('bookshelfBookSection')->uid($uid);
+        $book = $bookQuery->one();
+
+        $existsWish = $bookQuery->bookshelfWishListUsers($user)->exists();
+        $wishList = $book->bookshelfWishListUsers->asArray();
+
+        $newWishList = [];
+        if($existsWish) {
+            foreach ($wishList as $key => $wish) {
+                if($wish['id'] !== $user) {
+                    $newWishList[] = $wish['id'];
+                }
+            }
+        } else {
+            foreach ($wishList as $key => $wish) {
+                $newWishList[] = $wish['id'];
+            }
+            $newWishList[] = $user;
+        }
+
+        $book->setFieldValue('bookshelfWishListUsers', $newWishList);
+
+        Craft::$app->elements->saveElement($book);
+
+        return $this->renderTemplate('_bookshelf/book/_books');
+    }
+
 }

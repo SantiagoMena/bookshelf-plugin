@@ -1,11 +1,25 @@
 {% for book in books %}
     <div class="row">
         <div class="col-md-3">
-            <img class="img-thumbnail img-mini" src="{{ book.bookshelfCoverImageField | default('https://static.scientificamerican.com/sciam/cache/file/1DDFE633-2B85-468D-B28D05ADAE7D1AD8_source.jpg?w=590&h=800&D80F3D79-4382-49FA-BE4B4D0C62A5C3ED') }}" />
+            <img class="img-thumbnail img-mini" src="{{ book.bookshelfCoverImageField.one().getUrl() }}" />
         </div>
         <div class="col-md-6">{{ book.title }}</div>
         <div class="col-md-3">
-            <a href="#" class="btn btn-success col-md-12 in-wishlist">Remove ❤️</a>
+            <a href="javascript:void(0);" class="switch-wishlist btn btn-success" data-target-url="{{ url('wishlist/switch') ~ "?uid=" ~ book.uid }}" class="btn btn-success col-md-12 in-wishlist">Remove ❤️</a>
         </div>
     </div>
 {% endfor %}
+
+<script>
+    function switchWishList() {
+        $.get($(this).data('targetUrl'), function( data ) {
+            $.get("{{ url('wishlist') }}", function( data ) {
+                $( ".wishlist" ).html( data );
+            });
+
+            $('#books').html(data);
+        });
+    }
+
+    $('.switch-wishlist').click(switchWishList);
+</script>

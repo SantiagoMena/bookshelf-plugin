@@ -1,63 +1,9 @@
 {% extends "_bookshelf/layout/template" %}
 
 {% block content %}
-    <div class="row mt-xl-5">
-        {% for book in craft.entries().section('bookshelfBookSection').all() %}
-            {{
-                include('_bookshelf/book/_book', {
-                    book: book,
-                })
-            }}
-            {{
-            include('_bookshelf/book/_book', {
-                book: book,
-            })
-            }}
-            {{
-            include('_bookshelf/book/_book', {
-                book: book,
-            })
-            }}
-            {{
-            include('_bookshelf/book/_book', {
-                book: book,
-            })
-            }}
-            {{
-            include('_bookshelf/book/_book', {
-                book: book,
-            })
-            }}
-            {{
-            include('_bookshelf/book/_book', {
-                book: book,
-            })
-            }}
-            {{
-            include('_bookshelf/book/_book', {
-                book: book,
-            })
-            }}
-            {{
-            include('_bookshelf/book/_book', {
-                book: book,
-            })
-            }}
-            {{
-            include('_bookshelf/book/_book', {
-                book: book,
-            })
-            }}
-            {{
-            include('_bookshelf/book/_book', {
-                book: book,
-            })
-            }}
-            {{
-            include('_bookshelf/book/_book', {
-                book: book,
-            })
-            }}
-        {% endfor %}
+    <div class="row mt-xl-5" id="books">
+        {{
+            include('_bookshelf/book/_books')
+        }}
     </div>
 {% endblock %}

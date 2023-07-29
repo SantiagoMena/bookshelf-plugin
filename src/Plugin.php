@@ -56,6 +56,7 @@ class Plugin extends BasePlugin
             function(RegisterUrlRulesEvent $event) {
                 $event->rules['bookshelf'] = '_bookshelf/book/index';
                 $event->rules['wishlist'] = '_bookshelf/wish-list/index';
+                $event->rules['wishlist/switch'] = '_bookshelf/wish-list/switch';
             }
         );
 
