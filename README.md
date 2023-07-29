@@ -27,3 +27,7 @@ Install Plugin:
  php craft plugin/install _bookshelf
 ```
 
+Migrations:
+```
+php craft migrate/up --plugin=_bookshelf
+```
