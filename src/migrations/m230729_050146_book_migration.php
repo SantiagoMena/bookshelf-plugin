@@ -5,18 +5,21 @@ namespace santiagomena\craftbookshelf\migrations;
 use Craft;
 use craft\db\Migration;
 use craft\fieldlayoutelements\CustomField;
+use craft\fields\Assets;
+use craft\fields\Number;
 use craft\fields\PlainText;
 use craft\models\FieldGroup;
 use craft\models\FieldLayoutTab;
 use craft\models\Section;
 use craft\models\EntryType;
 use craft\models\Section_SiteSettings;
+use craft\models\Volume;
 use yii\db\Exception;
 
 /**
  * m230728_202516_book_migration migration.
  */
-class m230728_202516_book_migration extends Migration
+class m230729_050146_book_migration extends Migration
 {
     /**
      * @inheritdoc
@@ -61,18 +64,29 @@ class m230728_202516_book_migration extends Migration
                     Craft::$app->fields->saveField($fieldGenre);
 
 //                  3. Make Publication Year
-                    $fieldPublicationYear = new PlainText([
+                    $fieldPublicationYear = new Number([
                         'handle' => 'bookshelfPublicationYearField',
                         'name' => 'Publication Year',
-                        'groupId' => $fieldGroupBooks->id
+                        'groupId' => $fieldGroupBooks->id,
+                        'max' => date('Y'),
                     ]);
                     Craft::$app->fields->saveField($fieldPublicationYear);
 
 //                  4. Make Publication Cover Image
-                    $fieldCoverImage = new PlainText([
+                    $fieldCoverImage = new Assets([
                         'handle' => 'bookshelfCoverImageField',
                         'name' => 'Cover Image',
-                        'groupId' => $fieldGroupBooks->id
+                        'groupId' => $fieldGroupBooks->id,
+                        'restrictLocation' => true,
+                        'restrictedLocationSubpath' => '/uploads/{author.username}/',
+                        'restrictFiles' => true,
+                        'allowedKinds' => ['image'],
+                        'allowUploads' => 1,
+                        'minRelations' => 1,
+                        'maxRelations' => 1,
+                        'viewMode' => 'large',
+                        'previewMode' => 'full',
+                        'restrictedLocationSource' => "volume:".Craft::$app->volumes->getVolumeByHandle('bookshelfImagesVolume')->uid,
                     ]);
                     Craft::$app->fields->saveField($fieldCoverImage);
 
