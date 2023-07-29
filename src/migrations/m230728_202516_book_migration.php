@@ -37,7 +37,6 @@ class m230728_202516_book_migration extends Migration
                 $successFieldGroup = Craft::$app->fields->saveGroup($fieldGroup);
 
 //                2. Make Fields
-
                 $groups = Craft::$app->fields->getAllGroups();
 
                 foreach ($groups as $group) {
@@ -47,14 +46,46 @@ class m230728_202516_book_migration extends Migration
                 }
 
                 if($fieldGroupBooks) {
-                    // Make Fields
+//                  Make Fields
+//                  1. Make Author
                     $fieldAuthor = new PlainText([
                         'handle' => 'bookshelfAuthorField',
                         'name' => 'bookshelfAuthorField',
                         'groupId' => $fieldGroupBooks->id
                     ]);
+                    Craft::$app->fields->saveField($fieldAuthor);
 
-                    $successFieldAuthor = Craft::$app->fields->saveField($fieldAuthor);
+//                  2. Make Genre
+                    $fieldGenre = new PlainText([
+                        'handle' => 'bookshelfGenreField',
+                        'name' => 'bookshelfGenreField',
+                        'groupId' => $fieldGroupBooks->id
+                    ]);
+                    Craft::$app->fields->saveField($fieldGenre);
+
+//                  3. Make Publication Year
+                    $fieldPublicationYear = new PlainText([
+                        'handle' => 'bookshelfPublicationYearField',
+                        'name' => 'bookshelfPublicationYearField',
+                        'groupId' => $fieldGroupBooks->id
+                    ]);
+                    Craft::$app->fields->saveField($fieldPublicationYear);
+
+//                  4. Make Publication Cover Image
+                    $fieldCoverImage = new PlainText([
+                        'handle' => 'bookshelfCoverImageField',
+                        'name' => 'bookshelfCoverImageField',
+                        'groupId' => $fieldGroupBooks->id
+                    ]);
+                    Craft::$app->fields->saveField($fieldCoverImage);
+
+//                  5. Make Publication Brief Description
+                    $fieldBriefDescription = new PlainText([
+                        'handle' => 'bookshelfBriefDescriptionField',
+                        'name' => 'bookshelfBriefDescriptionField',
+                        'groupId' => $fieldGroupBooks->id
+                    ]);
+                    Craft::$app->fields->saveField($fieldBriefDescription);
                 }
 
 //              3. Create Section
@@ -79,6 +110,10 @@ class m230728_202516_book_migration extends Migration
                 $entryType = Craft::$app->getSections()->getSectionByHandle('bookshelfBookSection')->entryTypes[0];
 
                 $fieldAuthor = Craft::$app->getFields()->getFieldByHandle('bookshelfAuthorField');
+                $fieldGenre = Craft::$app->getFields()->getFieldByHandle('bookshelfGenreField');
+                $fieldPublicationYear = Craft::$app->getFields()->getFieldByHandle('bookshelfPublicationYearField');
+                $fieldCoverImage = Craft::$app->getFields()->getFieldByHandle('bookshelfCoverImageField');
+                $fieldBriefDescription = Craft::$app->getFields()->getFieldByHandle('bookshelfBriefDescriptionField');
 
                 // Get current fieldLayout
                 $fieldLayout = $entryType->getFieldLayout();
@@ -90,7 +125,19 @@ class m230728_202516_book_migration extends Migration
                         'elements' => [
                             new CustomField($fieldAuthor, [
                                 'required' => true,
-                            ])
+                            ]),
+                            new CustomField($fieldGenre, [
+                                'required' => true,
+                            ]),
+                            new CustomField($fieldPublicationYear, [
+                                'required' => true,
+                            ]),
+                            new CustomField($fieldCoverImage, [
+                                'required' => true,
+                            ]),
+                            new CustomField($fieldBriefDescription, [
+                                'required' => true,
+                            ]),
                         ]
                     ])
                 ]);
@@ -133,12 +180,17 @@ class m230728_202516_book_migration extends Migration
                 }
 
                 if($fieldGroupBooks) {
-                    // Remove fields
                     $fields = Craft::$app->fields->getFieldsByGroupId($fieldGroupBooks->id);
 
                     foreach ($fields as $field) {
 //                      2. Delete Fields
-                        if($field->handle === 'bookshelfAuthorField'){
+                        if(
+                            $field->handle === 'bookshelfAuthorField' ||
+                            $field->handle === 'bookshelfGenreField' ||
+                            $field->handle === 'bookshelfPublicationYearField' ||
+                            $field->handle === 'bookshelfCoverImageField' ||
+                            $field->handle === 'bookshelfBriefDescriptionField'
+                        ){
                             Craft::$app->fields->deleteField($field);
                         }
                     }
