@@ -50,6 +50,15 @@ class Plugin extends BasePlugin
     {
         // Register event handlers here ...
         // Routes
+
+        Event::on(
+            UrlManager::class,
+            UrlManager::EVENT_REGISTER_SITE_URL_RULES,
+            function(RegisterUrlRulesEvent $event) {
+                $event->rules['bookshelf'] = '_bookshelf/public-bookshelf/index';
+            }
+        );
+
         Event::on(
             UrlManager::class,
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
@@ -60,13 +69,6 @@ class Plugin extends BasePlugin
             }
         );
 
-        Event::on(
-            UrlManager::class,
-            UrlManager::EVENT_REGISTER_SITE_URL_RULES,
-            function(RegisterUrlRulesEvent $event) {
-                $event->rules['bookshelf'] = '_bookshelf/public-bookshelf/index';
-            }
-        );
         // Menu item
 
         // Register the sidebar menu item
@@ -75,7 +77,7 @@ class Plugin extends BasePlugin
             Cp::EVENT_REGISTER_CP_NAV_ITEMS,
             function(RegisterCpNavItemsEvent $event) {
                 $event->navItems[] = [
-                    'url' => '/bookshelf',
+                    'url' => 'bookshelf',
                     'label' => 'Bookshelf',
                     'icon' => '@santiagomena/craftbookshelf/icon.svg',
                 ];
