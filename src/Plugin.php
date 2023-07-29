@@ -5,10 +5,14 @@ namespace santiagomena\craftbookshelf;
 use Craft;
 use craft\base\Event;
 use craft\base\Plugin as BasePlugin;
+use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterUrlRulesEvent;
-use craft\web\twig\variables\Cp;
+use craft\services\Fs;
 use craft\web\UrlManager;
+use craft\web\twig\variables\Cp;
+use santiagomena\craftbookshelf\fs\Files;
+use yii\base\Event as EventAlias;
 
 /**
  * bookshelf plugin
@@ -72,5 +76,9 @@ class Plugin extends BasePlugin
                 ];
             }
         );
+
+        EventAlias::on(Fs::class, Fs::EVENT_REGISTER_FILESYSTEM_TYPES, function (RegisterComponentTypesEvent $event) {
+            $event->types[] = Files::class;
+        });
     }
 }
