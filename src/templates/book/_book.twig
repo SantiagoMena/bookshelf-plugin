@@ -6,13 +6,7 @@
     <p class="year"><span>Publication Year:</span> {{ book.bookshelfPublicationYearField }}</p>
     <p class="description text-truncate">{{ book.bookshelfBriefDescriptionField }}</p>
 
-    {% set wishListUsers = book.bookshelfWishListUsers.all() %}
-    {% set inWishList = false %}
-    {% for wishListUser in wishListUsers %}
-        {% if wishListUser.id == craft.app.user.identity.id %}
-            {% set inWishList = true %}
-        {% endif %}
-    {% endfor %}
+    {% set inWishList = craft.entries().section('bookshelfBookSection').bookshelfWishListUsers(craft.app.user.identity.id).exists() %}
 
     {% if inWishList %}
         <a href="javascript:void(0);" class="btn btn-success col-md-12 switch-wishlist-books" data-target-url="{{ url('wishlist/switch') ~ "?uid=" ~ book.uid }}">Remove From Wish List ❤️</a>
