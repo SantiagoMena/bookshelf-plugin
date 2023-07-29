@@ -1,17 +1,25 @@
 <div class="col-md-3 align-content-center mb-4 mt-4">
-    <h1 class="title text-truncate">{{ book.title }}</h1>
-    <p class="author"><span>Author:</span> {{ book.bookshelfAuthorField }}</p>
-    <img class="img-thumbnail" src="{{ book.bookshelfCoverImageField.one().getUrl() }}" />
-    <p class="genre"><span>Genre:</span> {{ book.bookshelfGenreField }}</p>
-    <p class="year"><span>Publication Year:</span> {{ book.bookshelfPublicationYearField }}</p>
-    <p class="description text-truncate">{{ book.bookshelfBriefDescriptionField }}</p>
-        {% set wishListUsers = book.bookshelfWishListUsers.all() %}
-        {% set inWishList = false %}
-        {% for wishListUser in wishListUsers %}
-            {% if wishListUser.id == craft.app.user.identity.id %}
-                {% set inWishList = true %}
-            {% endif %}
-        {% endfor %}
+    <h3 class="title text-truncate">{{ book.title }}</h3>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front">
+                <div class="image-background" style='background-image: url("{{ book.bookshelfCoverImageField.one().getUrl() }}");'></div>
+            </div>
+            <div class="flip-card-back card-back">
+                <p class="author"><span>Author:</span> {{ book.bookshelfAuthorField }}</p>
+                <p class="genre"><span>Genre:</span> {{ book.bookshelfGenreField }}</p>
+                <p class="description text-wrap text-truncate">{{ book.bookshelfBriefDescriptionField }}</p>
+                <p class="year"><span>Publication Year:</span> {{ book.bookshelfPublicationYearField }}</p>
+            </div>
+        </div>
+    </div>
+    {% set wishListUsers = book.bookshelfWishListUsers.all() %}
+    {% set inWishList = false %}
+    {% for wishListUser in wishListUsers %}
+        {% if wishListUser.id == craft.app.user.identity.id %}
+            {% set inWishList = true %}
+        {% endif %}
+    {% endfor %}
     <a href="javascript:void(0);" class="btn btn-success col-md-12 switch-wishlist-books" data-target-url="{{ url('wishlist/switch') ~ "?uid=" ~ book.uid }}">
         {{ inWishList ? "Remove From Wish List ❤️" : "Add To Wish List ♡" }}
     </a>

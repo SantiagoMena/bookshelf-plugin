@@ -1,5 +1,5 @@
 {% for book in books %}
-    <div class="row">
+    <div class="row mb-3 wishlist-item">
         <div class="col-md-3">
             <img class="img-thumbnail img-mini" src="{{ book.bookshelfCoverImageField.one().getUrl() }}" />
         </div>
