@@ -4,6 +4,7 @@ namespace santiagomena\craftbookshelf\controllers;
 use Craft;
 use craft\db\Query;
 use craft\db\Table;
+use craft\elements\Entry;
 use craft\elements\User;
 use craft\helpers\Db;
 use craft\models\EntryType;
@@ -20,7 +21,7 @@ class PublicBookshelfController extends Controller
 
         $books = [];
         if($author) {
-            $books = \craft\elements\Entry::find()->section('bookshelfBookSection')->authorId($author->id);
+            $books = Entry::find()->section('bookshelfBookSection')->authorId($author->id);
         }
 
         $oldMode = Craft::$app->view->getTemplateMode();
