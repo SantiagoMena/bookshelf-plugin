@@ -20,7 +20,7 @@
             {% set inWishList = true %}
         {% endif %}
     {% endfor %}
-    <a href="javascript:void(0);" class="btn btn-success col-md-12 switch-wishlist-books" data-target-url="{{ url('wishlist/switch') ~ "?uid=" ~ book.uid }}">
+    <a href="javascript:void(0);" class="btn btn-success col-12 switch-wishlist-books" data-target-url="{{ url('wishlist/switch') ~ "?uid=" ~ book.uid }}">
         {{ inWishList ? "Remove From Wish List ❤️" : "Add To Wish List ♡" }}
     </a>
 </div>
