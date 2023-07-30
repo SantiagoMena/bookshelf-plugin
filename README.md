@@ -47,7 +47,7 @@ php craft migrate/up --plugin=_bookshelf
 
 #### 2. View Collection: The plugin should present users' book collections in a visually appealing and user-friendly interface.
 
-![View Collection](https://github.com/SantiagoMena/bookshelf-plugin/blob/main/imgs/create.gif?raw=true)
+![View Collection](https://github.com/SantiagoMena/bookshelf-plugin/blob/main/imgs/user.gif?raw=true)
 
 #### 3. Share Collection: The plugin should allow users to share their book collections via a unique URL.
 
